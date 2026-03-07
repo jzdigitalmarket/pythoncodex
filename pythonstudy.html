@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#050910">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PythonCodex">
     <title>Python Study Hub ⚛️</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
@@ -80,6 +85,19 @@
             font-size: 1.1em; transition: 0.2s; display: flex; align-items: center; justify-content: center;
         }
         .dark-toggle:hover { border-color: var(--blue); }
+        .back-btn {
+            background: none; border: 2px solid var(--border);
+            color: var(--muted); padding: 6px 14px; border-radius: 20px;
+            cursor: pointer; font-size: 0.8em; font-family: inherit;
+            text-decoration: none; transition: 0.2s; font-weight: 600;
+        }
+        .back-btn:hover { border-color: var(--blue); color: var(--blue); }
+        .install-btn {
+            background: none; border: 2px solid var(--green);
+            width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
+            font-size: 1em; transition: 0.2s; display: flex; align-items: center; justify-content: center;
+        }
+        .install-btn:hover { background: var(--green); }
 
         /* PROGRESS BAR */
         .progress-wrap { margin-bottom: 20px; }
@@ -216,14 +234,16 @@
         <div class="header">
             <h1>Python Study Hub ⚛️</h1>
             <div class="header-actions">
+                <a href="index.html" class="back-btn" title="Voltar à introdução">← Intro</a>
                 <button class="dark-toggle" id="darkToggle" title="Modo escuro/claro">🌙</button>
+                <button class="install-btn" id="installBtn" title="Instalar como app" style="display:none">📲</button>
             </div>
         </div>
 
         <div class="progress-wrap">
             <div class="progress-label">
                 <span>Progresso</span>
-                <span id="progressText">0 / 8 seções concluídas</span>
+                <span id="progressText">0 / 12 seções concluídas</span>
             </div>
             <div class="progress-track">
                 <div class="progress-fill" id="progressFill" style="width:0%"></div>
@@ -239,6 +259,10 @@
             <button onclick="showCode('erros', this)" id="btn-erros">⚠️ Erros</button>
             <button onclick="showCode('poo', this)" id="btn-poo">🏗️ POO</button>
             <button onclick="showCode('pandas', this)" id="btn-pandas">📊 Pandas</button>
+            <button onclick="showCode('arquivos', this)" id="btn-arquivos">📄 Arquivos</button>
+            <button onclick="showCode('regex', this)" id="btn-regex">🔍 Regex</button>
+            <button onclick="showCode('requests', this)" id="btn-requests">🌐 Requests</button>
+            <button onclick="showCode('decorators', this)" id="btn-decorators">✨ Decorators</button>
             <button onclick="showCode('playground', this)" class="btn-pg" id="btn-playground">🚀 PLAYGROUND</button>
         </div>
 
@@ -564,6 +588,207 @@ print(f"\nMédia: {df['nota'].mean():.1f}")</code></pre></div>
                 </div>
             </div>
 
+            <!-- ARQUIVOS -->
+            <div id="arquivos" class="code-section">
+                <h2>📄 Arquivos</h2>
+                <div class="desc">Python usa <code>open()</code> para ler e escrever arquivos. O modo <code>"r"</code> lê, <code>"w"</code> escreve (sobrescreve), <code>"a"</code> adiciona ao final. Use <code>with</code> para fechar automaticamente.</div>
+
+                <div class="example-block">
+                    <h4>📌 Básico — Ler e escrever</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python"># Escrever em arquivo
+with open("notas.txt", "w") as f:
+    f.write("Linha 1\n")
+    f.write("Linha 2\n")
+
+# Ler arquivo
+with open("notas.txt", "r") as f:
+    conteudo = f.read()
+    print(conteudo)</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`# Escrever em arquivo\nwith open('notas.txt', 'w') as f:\n    f.write('Linha 1\\n')\n    f.write('Linha 2\\n')\n\n# Ler arquivo\nwith open('notas.txt', 'r') as f:\n    conteudo = f.read()\n    print(conteudo)`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="example-block">
+                    <h4>📌 Intermediário — Ler linha por linha</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python">linhas = ["Ana - 8.5\n", "João - 6.0\n", "Pedro - 9.2\n"]
+
+with open("alunos.txt", "w") as f:
+    f.writelines(linhas)
+
+with open("alunos.txt", "r") as f:
+    for i, linha in enumerate(f, 1):
+        print(f"Linha {i}: {linha.strip()}")</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`linhas = ['Ana - 8.5\\n', 'João - 6.0\\n', 'Pedro - 9.2\\n']\n\nwith open('alunos.txt', 'w') as f:\n    f.writelines(linhas)\n\nwith open('alunos.txt', 'r') as f:\n    for i, linha in enumerate(f, 1):\n        print(f'Linha {i}: {linha.strip()}')`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="quiz-box" id="quiz-arquivos">
+                    <h3>🧠 Quiz rápido</h3>
+                    <div class="quiz-question">Qual modo do <code>open()</code> adiciona conteúdo ao final sem apagar o existente?</div>
+                    <div class="quiz-opts">
+                        <button class="quiz-opt" onclick="answerQuiz('arquivos', this, false)"><code>"w"</code></button>
+                        <button class="quiz-opt" onclick="answerQuiz('arquivos', this, false)"><code>"r"</code></button>
+                        <button class="quiz-opt" onclick="answerQuiz('arquivos', this, true)"><code>"a"</code></button>
+                    </div>
+                    <div class="quiz-feedback" id="qf-arquivos"></div>
+                </div>
+            </div>
+
+            <!-- REGEX -->
+            <div id="regex" class="code-section">
+                <h2>🔍 Expressões Regulares</h2>
+                <div class="desc">O módulo <code>re</code> permite buscar padrões em textos. <code>re.search()</code> encontra a primeira ocorrência, <code>re.findall()</code> retorna todas, <code>re.sub()</code> substitui.</div>
+
+                <div class="example-block">
+                    <h4>📌 Básico — Buscar padrão</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python">import re
+
+texto = "Meu email é joao@email.com"
+padrao = r"\w+@\w+\.\w+"
+
+resultado = re.search(padrao, texto)
+if resultado:
+    print("Email encontrado:", resultado.group())</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`import re\n\ntexto = 'Meu email é joao@email.com'\npadrao = r'\\w+@\\w+\\.\\w+'\n\nresultado = re.search(padrao, texto)\nif resultado:\n    print('Email encontrado:', resultado.group())`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="example-block">
+                    <h4>📌 Intermediário — findall e sub</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python">import re
+
+texto = "Os preços são R$10, R$25 e R$100"
+
+# Encontrar todos os valores
+valores = re.findall(r"R\$\d+", texto)
+print("Valores:", valores)
+
+# Substituir números por ***
+censurado = re.sub(r"\d+", "***", texto)
+print("Censurado:", censurado)</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`import re\n\ntexto = 'Os preços são R$10, R$25 e R$100'\n\nvalores = re.findall(r'R\\$\\d+', texto)\nprint('Valores:', valores)\n\ncensurado = re.sub(r'\\d+', '***', texto)\nprint('Censurado:', censurado)`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="quiz-box" id="quiz-regex">
+                    <h3>🧠 Quiz rápido</h3>
+                    <div class="quiz-question">Qual função do <code>re</code> retorna uma lista com <strong>todas</strong> as ocorrências do padrão?</div>
+                    <div class="quiz-opts">
+                        <button class="quiz-opt" onclick="answerQuiz('regex', this, false)"><code>re.search()</code></button>
+                        <button class="quiz-opt" onclick="answerQuiz('regex', this, true)"><code>re.findall()</code></button>
+                        <button class="quiz-opt" onclick="answerQuiz('regex', this, false)"><code>re.match()</code></button>
+                    </div>
+                    <div class="quiz-feedback" id="qf-regex"></div>
+                </div>
+            </div>
+
+            <!-- REQUESTS -->
+            <div id="requests" class="code-section">
+                <h2>🌐 Requests & APIs</h2>
+                <div class="desc">A biblioteca <code>requests</code> facilita chamadas HTTP. Use <code>requests.get(url)</code> para buscar dados de APIs. A resposta pode ser convertida para JSON com <code>.json()</code>.</div>
+
+                <div class="example-block">
+                    <h4>📌 Básico — GET em uma API pública</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python">import requests
+
+url = "https://api.github.com/users/github"
+resposta = requests.get(url)
+
+if resposta.status_code == 200:
+    dados = resposta.json()
+    print("Nome:", dados["name"])
+    print("Seguidores:", dados["followers"])
+else:
+    print("Erro:", resposta.status_code)</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`import requests\n\nurl = 'https://api.github.com/users/github'\nresposta = requests.get(url)\n\nif resposta.status_code == 200:\n    dados = resposta.json()\n    print('Nome:', dados['name'])\n    print('Seguidores:', dados['followers'])\nelse:\n    print('Erro:', resposta.status_code)`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="example-block">
+                    <h4>📌 Intermediário — POST com dados</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python">import requests
+
+url = "https://httpbin.org/post"
+payload = {"nome": "Ana", "idade": 25}
+headers = {"Content-Type": "application/json"}
+
+resposta = requests.post(url, json=payload, headers=headers)
+dados = resposta.json()
+print("Enviado:", dados["json"])</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`import requests\n\nurl = 'https://httpbin.org/post'\npayload = {'nome': 'Ana', 'idade': 25}\nheaders = {'Content-Type': 'application/json'}\n\nresposta = requests.post(url, json=payload, headers=headers)\ndados = resposta.json()\nprint('Enviado:', dados['json'])`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="quiz-box" id="quiz-requests">
+                    <h3>🧠 Quiz rápido</h3>
+                    <div class="quiz-question">Qual código HTTP indica que uma requisição foi bem-sucedida?</div>
+                    <div class="quiz-opts">
+                        <button class="quiz-opt" onclick="answerQuiz('requests', this, false)">404</button>
+                        <button class="quiz-opt" onclick="answerQuiz('requests', this, false)">500</button>
+                        <button class="quiz-opt" onclick="answerQuiz('requests', this, true)">200</button>
+                    </div>
+                    <div class="quiz-feedback" id="qf-requests"></div>
+                </div>
+            </div>
+
+            <!-- DECORATORS -->
+            <div id="decorators" class="code-section">
+                <h2>✨ Decorators</h2>
+                <div class="desc">Decorators são funções que envolvem outras funções para adicionar comportamento sem modificar o código original. Usados com a sintaxe <code>@nome_decorator</code>.</div>
+
+                <div class="example-block">
+                    <h4>📌 Básico — Criar um decorator</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python">def meu_decorator(func):
+    def wrapper():
+        print("--- Antes da função ---")
+        func()
+        print("--- Depois da função ---")
+    return wrapper
+
+@meu_decorator
+def saudar():
+    print("Olá, mundo!")
+
+saudar()</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`def meu_decorator(func):\n    def wrapper():\n        print('--- Antes da função ---')\n        func()\n        print('--- Depois da função ---')\n    return wrapper\n\n@meu_decorator\ndef saudar():\n    print('Olá, mundo!')\n\nsaudar()`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="example-block">
+                    <h4>📌 Intermediário — Decorator com timer</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python">import time
+
+def cronometrar(func):
+    def wrapper(*args, **kwargs):
+        inicio = time.time()
+        resultado = func(*args, **kwargs)
+        fim = time.time()
+        print(f"{func.__name__} levou {fim - inicio:.4f}s")
+        return resultado
+    return wrapper
+
+@cronometrar
+def calcular():
+    total = sum(range(1_000_000))
+    return total
+
+print("Total:", calcular())</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`import time\n\ndef cronometrar(func):\n    def wrapper(*args, **kwargs):\n        inicio = time.time()\n        resultado = func(*args, **kwargs)\n        fim = time.time()\n        print(f'{func.__name__} levou {fim - inicio:.4f}s')\n        return resultado\n    return wrapper\n\n@cronometrar\ndef calcular():\n    total = sum(range(1_000_000))\n    return total\n\nprint('Total:', calcular())`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="quiz-box" id="quiz-decorators">
+                    <h3>🧠 Quiz rápido</h3>
+                    <div class="quiz-question">O que a sintaxe <code>@meu_decorator</code> acima de uma função faz?</div>
+                    <div class="quiz-opts">
+                        <button class="quiz-opt" onclick="answerQuiz('decorators', this, false)">Comenta a função</button>
+                        <button class="quiz-opt" onclick="answerQuiz('decorators', this, true)">Envolve a função com o decorator automaticamente</button>
+                        <button class="quiz-opt" onclick="answerQuiz('decorators', this, false)">Cria uma cópia da função</button>
+                    </div>
+                    <div class="quiz-feedback" id="qf-decorators"></div>
+                </div>
+            </div>
+
             <!-- PLAYGROUND -->
             <div id="playground" class="code-section">
                 <h2>🚀 Playground Python</h2>
@@ -592,7 +817,7 @@ print(f"\nMédia: {df['nota'].mean():.1f}")</code></pre></div>
 
         // === PROGRESS ===
         const completedSections = new Set();
-        const totalSections = 8; // excluding playground
+        const totalSections = 12; // excluding playground
 
         function markDone(id) {
             if (id === 'playground') return;
@@ -607,7 +832,7 @@ print(f"\nMédia: {df['nota'].mean():.1f}")</code></pre></div>
         function updateProgress() {
             const pct = (completedSections.size / totalSections) * 100;
             document.getElementById('progressFill').style.width = pct + '%';
-            document.getElementById('progressText').textContent = `${completedSections.size} / ${totalSections} seções concluídas`;
+            document.getElementById('progressText').textContent = `${completedSections.size} / 12 seções concluídas`;
         }
 
         // === NAVIGATION ===
@@ -777,6 +1002,26 @@ print(f"\nMédia: {df['nota'].mean():.1f}")</code></pre></div>
 
         // Mark first section as visited on load
         markDone('hello');
+
+        // === PWA INSTALL ===
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installBtn').style.display = 'flex';
+        });
+        document.getElementById('installBtn').addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') document.getElementById('installBtn').style.display = 'none';
+            deferredPrompt = null;
+        });
+
+        // === SERVICE WORKER ===
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        }
     </script>
 </body>
 </html>
