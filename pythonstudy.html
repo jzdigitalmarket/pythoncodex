@@ -92,12 +92,43 @@
             text-decoration: none; transition: 0.2s; font-weight: 600;
         }
         .back-btn:hover { border-color: var(--blue); color: var(--blue); }
-        .install-btn {
-            background: none; border: 2px solid var(--green);
-            width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
-            font-size: 1em; transition: 0.2s; display: flex; align-items: center; justify-content: center;
+        .install-btn { display: none; }
+
+        /* PWA INSTALL BANNER */
+        #pwa-banner {
+            display: none;
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            z-index: 999;
+            background: linear-gradient(135deg, #1a2a3a, #0d1a2a);
+            border: 1px solid rgba(55,118,171,0.5);
+            border-radius: 14px; padding: 14px 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            display: none; align-items: center; gap: 14px;
+            max-width: 420px; width: calc(100% - 40px);
+            animation: slideUp 0.4s ease;
         }
-        .install-btn:hover { background: var(--green); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        #pwa-banner .pwa-icon { font-size: 1.8em; flex-shrink: 0; }
+        #pwa-banner .pwa-text { flex: 1; }
+        #pwa-banner .pwa-text strong { display: block; color: #e8edf5; font-size: 0.9em; margin-bottom: 2px; }
+        #pwa-banner .pwa-text span { color: #7a8aa0; font-size: 0.78em; }
+        #pwa-banner .pwa-actions { display: flex; gap: 8px; flex-shrink: 0; }
+        .pwa-install-btn {
+            background: var(--blue); color: white; border: none;
+            padding: 8px 16px; border-radius: 8px; cursor: pointer;
+            font-family: inherit; font-weight: 700; font-size: 0.82em;
+            transition: 0.2s; white-space: nowrap;
+        }
+        .pwa-install-btn:hover { background: #2a5f96; transform: translateY(-1px); }
+        .pwa-dismiss-btn {
+            background: none; color: #7a8aa0; border: 1px solid rgba(255,255,255,0.1);
+            padding: 8px 12px; border-radius: 8px; cursor: pointer;
+            font-family: inherit; font-size: 0.82em; transition: 0.2s;
+        }
+        .pwa-dismiss-btn:hover { color: #e8edf5; border-color: rgba(255,255,255,0.25); }
 
         /* PROGRESS BAR */
         .progress-wrap { margin-bottom: 20px; }
@@ -804,6 +835,19 @@ print("Total:", calcular())</code></pre></div>
         </div>
     </div>
 
+    <!-- PWA INSTALL BANNER -->
+    <div id="pwa-banner">
+        <span class="pwa-icon">📲</span>
+        <div class="pwa-text">
+            <strong>Instalar Python Study Hub</strong>
+            <span>Acesse offline como app no seu dispositivo</span>
+        </div>
+        <div class="pwa-actions">
+            <button class="pwa-install-btn" id="pwa-install-btn">Instalar</button>
+            <button class="pwa-dismiss-btn" id="pwa-dismiss-btn">✕</button>
+        </div>
+    </div>
+
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 
@@ -1004,32 +1048,41 @@ print("Total:", calcular())</code></pre></div>
         markDone('hello');
 
 
-        // === PWA INSTALL ===
+        // === PWA INSTALL BANNER ===
         let deferredPrompt = null;
+        const banner = document.getElementById('pwa-banner');
+        const installBtn = document.getElementById('pwa-install-btn');
+        const dismissBtn = document.getElementById('pwa-dismiss-btn');
 
-        // Hide install btn if already running as installed PWA
-        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
-            document.getElementById('installBtn').style.display = 'none';
-        }
+        // Não mostra se já está rodando como PWA instalado
+        const isInstalled = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        // Não mostra se usuário já dispensou nesta sessão
+        const dismissed = sessionStorage.getItem('pwa-dismissed');
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            document.getElementById('installBtn').style.display = 'flex';
-        });
-
-        document.getElementById('installBtn').addEventListener('click', async () => {
-            if (!deferredPrompt) return;
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            deferredPrompt = null;
-            if (outcome === 'accepted') {
-                document.getElementById('installBtn').style.display = 'none';
+            if (!isInstalled && !dismissed) {
+                // Pequeno delay para não aparecer imediatamente
+                setTimeout(() => { banner.style.display = 'flex'; }, 2000);
             }
         });
 
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            banner.style.display = 'none';
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+        });
+
+        dismissBtn.addEventListener('click', () => {
+            banner.style.display = 'none';
+            sessionStorage.setItem('pwa-dismissed', '1');
+        });
+
         window.addEventListener('appinstalled', () => {
-            document.getElementById('installBtn').style.display = 'none';
+            banner.style.display = 'none';
             deferredPrompt = null;
         });
 
