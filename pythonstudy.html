@@ -354,7 +354,7 @@
         <div class="progress-wrap">
             <div class="progress-label">
                 <span>Progresso</span>
-                <span id="progressText">0 / 12 seções concluídas</span>
+                <span id="progressText">0 / 16 seções concluídas</span>
             </div>
             <div class="progress-track">
                 <div class="progress-fill" id="progressFill" style="width:0%"></div>
@@ -374,6 +374,10 @@
             <button onclick="showCode('regex', this)" id="btn-regex">🔍 Regex</button>
             <button onclick="showCode('requests', this)" id="btn-requests">🌐 Requests</button>
             <button onclick="showCode('decorators', this)" id="btn-decorators">✨ Decorators</button>
+            <button onclick="showCode('numpy', this)" id="btn-numpy">🔢 NumPy</button>
+            <button onclick="showCode('matplotlib', this)" id="btn-matplotlib">📈 Matplotlib</button>
+            <button onclick="showCode('sqlite', this)" id="btn-sqlite">🗄️ SQLite</button>
+            <button onclick="showCode('fastapi', this)" id="btn-fastapi">⚡ FastAPI</button>
             <button onclick="showCode('playground', this)" class="btn-pg" id="btn-playground">🚀 PLAYGROUND</button>
         </div>
 
@@ -900,6 +904,327 @@ print("Total:", calcular())</code></pre></div>
                 </div>
             </div>
 
+            <!-- NUMPY -->
+            <div id="numpy" class="code-section">
+                <h2>🔢 NumPy</h2>
+                <div class="desc">NumPy é a biblioteca fundamental para computação numérica em Python. Oferece arrays multidimensionais eficientes e funções matemáticas de alto desempenho.</div>
+
+                <div class="example-block">
+                    <h4>📌 Básico — Arrays e operações elementares</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python">import numpy as np
+
+# Criar arrays
+a = np.array([1, 2, 3, 4, 5])
+b = np.array([10, 20, 30, 40, 50])
+
+# Operações vetorizadas (sem loop!)
+print("Soma:", a + b)
+print("Dobro de a:", a * 2)
+print("Média:", np.mean(a))
+print("Desvio padrão:", np.std(a))
+
+# Array 2D (matriz)
+matriz = np.array([[1, 2, 3], [4, 5, 6]])
+print("Shape:", matriz.shape)
+print("Soma de todas as colunas:", np.sum(matriz, axis=0))</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`import numpy as np\n\na = np.array([1, 2, 3, 4, 5])\nb = np.array([10, 20, 30, 40, 50])\n\nprint('Soma:', a + b)\nprint('Dobro de a:', a * 2)\nprint('Média:', np.mean(a))\nprint('Desvio padrão:', np.std(a))\n\nmatriz = np.array([[1, 2, 3], [4, 5, 6]])\nprint('Shape:', matriz.shape)\nprint('Soma de todas as colunas:', np.sum(matriz, axis=0))`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="example-block">
+                    <h4>📌 Intermediário — Indexação, slicing e funções úteis</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python">import numpy as np
+
+# arange e linspace
+numeros = np.arange(0, 10, 2)        # [0, 2, 4, 6, 8]
+espacados = np.linspace(0, 1, 5)     # 5 valores entre 0 e 1
+
+print("arange:", numeros)
+print("linspace:", espacados)
+
+# Indexação booleana
+dados = np.array([15, 3, 42, 8, 27, 6])
+maiores = dados[dados > 10]
+print("Maiores que 10:", maiores)
+
+# Reshape
+v = np.arange(12)
+m = v.reshape(3, 4)
+print("Matriz 3x4:\n", m)
+
+# Operações matriciais
+A = np.array([[1, 2], [3, 4]])
+B = np.array([[5, 6], [7, 8]])
+print("Produto matricial:\n", A @ B)</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`import numpy as np\n\nnumeros = np.arange(0, 10, 2)\nespacados = np.linspace(0, 1, 5)\nprint('arange:', numeros)\nprint('linspace:', espacados)\n\ndados = np.array([15, 3, 42, 8, 27, 6])\nmaiores = dados[dados > 10]\nprint('Maiores que 10:', maiores)\n\nv = np.arange(12)\nm = v.reshape(3, 4)\nprint('Matriz 3x4:\\n', m)\n\nA = np.array([[1, 2], [3, 4]])\nB = np.array([[5, 6], [7, 8]])\nprint('Produto matricial:\\n', A @ B)`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="quiz-box" id="quiz-numpy">
+                    <h3>🧠 Quiz rápido</h3>
+                    <div class="quiz-question">O que <code>np.array([1,2,3]) * 3</code> retorna?</div>
+                    <div class="quiz-opts">
+                        <button class="quiz-opt" onclick="answerQuiz('numpy', this, false)">[1,2,3,1,2,3,1,2,3]</button>
+                        <button class="quiz-opt" onclick="answerQuiz('numpy', this, true)">[3, 6, 9]</button>
+                        <button class="quiz-opt" onclick="answerQuiz('numpy', this, false)">Erro de tipo</button>
+                    </div>
+                    <div class="quiz-feedback" id="qf-numpy"></div>
+                </div>
+            </div>
+
+            <!-- MATPLOTLIB -->
+            <div id="matplotlib" class="code-section">
+                <h2>📈 Matplotlib</h2>
+                <div class="desc">Matplotlib é a principal biblioteca de visualização de dados em Python. Com ela você cria gráficos de linha, barras, pizza, dispersão e muito mais.</div>
+
+                <div class="example-block">
+                    <h4>📌 Básico — Gráfico de linha e barras</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python">import matplotlib
+matplotlib.use('Agg')  # necessário no Pyodide
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Gráfico de linha
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.figure(figsize=(8, 4))
+plt.plot(x, y, color='royalblue', linewidth=2, label='sen(x)')
+plt.title('Onda Senoidal')
+plt.xlabel('x')
+plt.ylabel('sen(x)')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.savefig('grafico.png', dpi=100)
+plt.show()
+print("Gráfico gerado!")</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\n\nplt.figure(figsize=(8, 4))\nplt.plot(x, y, color='royalblue', linewidth=2, label='sen(x)')\nplt.title('Onda Senoidal')\nplt.xlabel('x')\nplt.ylabel('sen(x)')\nplt.legend()\nplt.grid(True, alpha=0.3)\nplt.tight_layout()\nplt.savefig('grafico.png', dpi=100)\nplt.show()\nprint('Gráfico gerado!')`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="example-block">
+                    <h4>📌 Intermediário — Múltiplos subplots</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python">import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+fig, axes = plt.subplots(1, 3, figsize=(12, 4))
+
+# Gráfico de barras
+categorias = ['Jan', 'Fev', 'Mar', 'Abr']
+valores = [23, 45, 31, 60]
+axes[0].bar(categorias, valores, color='steelblue')
+axes[0].set_title('Vendas Mensais')
+
+# Gráfico de dispersão
+x = np.random.randn(50)
+y = x * 2 + np.random.randn(50)
+axes[1].scatter(x, y, alpha=0.6, color='tomato')
+axes[1].set_title('Dispersão')
+
+# Histograma
+dados = np.random.normal(0, 1, 500)
+axes[2].hist(dados, bins=25, color='mediumseagreen', edgecolor='white')
+axes[2].set_title('Histograma Normal')
+
+plt.tight_layout()
+plt.savefig('subplots.png')
+plt.show()
+print("Subplots gerados!")</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nfig, axes = plt.subplots(1, 3, figsize=(12, 4))\n\ncategorias = ['Jan', 'Fev', 'Mar', 'Abr']\nvalores = [23, 45, 31, 60]\naxes[0].bar(categorias, valores, color='steelblue')\naxes[0].set_title('Vendas Mensais')\n\nx = np.random.randn(50)\ny = x * 2 + np.random.randn(50)\naxes[1].scatter(x, y, alpha=0.6, color='tomato')\naxes[1].set_title('Dispersão')\n\ndados = np.random.normal(0, 1, 500)\naxes[2].hist(dados, bins=25, color='mediumseagreen', edgecolor='white')\naxes[2].set_title('Histograma Normal')\n\nplt.tight_layout()\nplt.savefig('subplots.png')\nplt.show()\nprint('Subplots gerados!')`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="quiz-box" id="quiz-matplotlib">
+                    <h3>🧠 Quiz rápido</h3>
+                    <div class="quiz-question">Qual função do Matplotlib cria múltiplos gráficos lado a lado?</div>
+                    <div class="quiz-opts">
+                        <button class="quiz-opt" onclick="answerQuiz('matplotlib', this, false)">plt.multiple()</button>
+                        <button class="quiz-opt" onclick="answerQuiz('matplotlib', this, true)">plt.subplots()</button>
+                        <button class="quiz-opt" onclick="answerQuiz('matplotlib', this, false)">plt.grid()</button>
+                    </div>
+                    <div class="quiz-feedback" id="qf-matplotlib"></div>
+                </div>
+            </div>
+
+            <!-- SQLITE -->
+            <div id="sqlite" class="code-section">
+                <h2>🗄️ SQLite</h2>
+                <div class="desc">SQLite é um banco de dados relacional embutido no Python — sem necessidade de instalar nada. Ideal para apps locais, protótipos e aprender SQL.</div>
+
+                <div class="example-block">
+                    <h4>📌 Básico — Criar banco, inserir e consultar</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python">import sqlite3
+
+# Conectar (cria o arquivo se não existir)
+conn = sqlite3.connect(':memory:')  # banco em memória
+cursor = conn.cursor()
+
+# Criar tabela
+cursor.execute('''
+    CREATE TABLE usuarios (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome TEXT NOT NULL,
+        idade INTEGER
+    )
+''')
+
+# Inserir dados
+cursor.executemany('INSERT INTO usuarios (nome, idade) VALUES (?, ?)', [
+    ('Ana', 28),
+    ('Bruno', 35),
+    ('Carla', 22),
+])
+conn.commit()
+
+# Consultar
+cursor.execute('SELECT * FROM usuarios WHERE idade > 25')
+for row in cursor.fetchall():
+    print(row)
+
+conn.close()</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`import sqlite3\n\nconn = sqlite3.connect(':memory:')\ncursor = conn.cursor()\n\ncursor.execute('''\n    CREATE TABLE usuarios (\n        id INTEGER PRIMARY KEY AUTOINCREMENT,\n        nome TEXT NOT NULL,\n        idade INTEGER\n    )\n''')\n\ncursor.executemany('INSERT INTO usuarios (nome, idade) VALUES (?, ?)', [\n    ('Ana', 28),\n    ('Bruno', 35),\n    ('Carla', 22),\n])\nconn.commit()\n\ncursor.execute('SELECT * FROM usuarios WHERE idade > 25')\nfor row in cursor.fetchall():\n    print(row)\n\nconn.close()`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="example-block">
+                    <h4>📌 Intermediário — UPDATE, DELETE e usar com Pandas</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python">import sqlite3
+import pandas as pd
+
+conn = sqlite3.connect(':memory:')
+cursor = conn.cursor()
+
+cursor.execute('CREATE TABLE produtos (id INTEGER PRIMARY KEY, nome TEXT, preco REAL, estoque INTEGER)')
+cursor.executemany('INSERT INTO produtos VALUES (?,?,?,?)', [
+    (1, 'Caneta', 1.50, 100),
+    (2, 'Caderno', 12.90, 50),
+    (3, 'Mochila', 89.90, 10),
+])
+conn.commit()
+
+# UPDATE
+cursor.execute('UPDATE produtos SET preco = preco * 1.1 WHERE estoque < 20')
+conn.commit()
+print("Reajuste de 10% em produtos com pouco estoque")
+
+# DELETE
+cursor.execute('DELETE FROM produtos WHERE preco < 5')
+conn.commit()
+
+# Ler com Pandas
+df = pd.read_sql_query('SELECT * FROM produtos ORDER BY preco', conn)
+print(df)
+
+conn.close()</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`import sqlite3\nimport pandas as pd\n\nconn = sqlite3.connect(':memory:')\ncursor = conn.cursor()\n\ncursor.execute('CREATE TABLE produtos (id INTEGER PRIMARY KEY, nome TEXT, preco REAL, estoque INTEGER)')\ncursor.executemany('INSERT INTO produtos VALUES (?,?,?,?)', [\n    (1, 'Caneta', 1.50, 100),\n    (2, 'Caderno', 12.90, 50),\n    (3, 'Mochila', 89.90, 10),\n])\nconn.commit()\n\ncursor.execute('UPDATE produtos SET preco = preco * 1.1 WHERE estoque < 20')\nconn.commit()\nprint('Reajuste de 10% em produtos com pouco estoque')\n\ncursor.execute('DELETE FROM produtos WHERE preco < 5')\nconn.commit()\n\ndf = pd.read_sql_query('SELECT * FROM produtos ORDER BY preco', conn)\nprint(df)\n\nconn.close()`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="quiz-box" id="quiz-sqlite">
+                    <h3>🧠 Quiz rápido</h3>
+                    <div class="quiz-question">Por que usar <code>?</code> em vez de concatenar strings em queries SQLite?</div>
+                    <div class="quiz-opts">
+                        <button class="quiz-opt" onclick="answerQuiz('sqlite', this, false)">É mais rápido para o banco processar</button>
+                        <button class="quiz-opt" onclick="answerQuiz('sqlite', this, true)">Previne SQL Injection e escapa valores automaticamente</button>
+                        <button class="quiz-opt" onclick="answerQuiz('sqlite', this, false)">É obrigatório pela sintaxe do Python</button>
+                    </div>
+                    <div class="quiz-feedback" id="qf-sqlite"></div>
+                </div>
+            </div>
+
+            <!-- FASTAPI -->
+            <div id="fastapi" class="code-section">
+                <h2>⚡ FastAPI</h2>
+                <div class="desc">FastAPI é um framework moderno e rápido para criar APIs REST com Python. Usa type hints para validação automática e gera documentação interativa automaticamente.</div>
+
+                <div class="example-block">
+                    <h4>📌 Básico — Criar uma API simples</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python"># Para rodar: pip install fastapi uvicorn
+# Salve como main.py e execute: uvicorn main:app --reload
+
+from fastapi import FastAPI
+
+app = FastAPI()
+
+# Rota GET simples
+@app.get("/")
+def raiz():
+    return {"mensagem": "Bem-vindo à minha API!"}
+
+# Rota com parâmetro de path
+@app.get("/usuarios/{user_id}")
+def buscar_usuario(user_id: int):
+    return {"id": user_id, "nome": f"Usuário {user_id}"}
+
+# Rota com query params
+@app.get("/produtos")
+def listar_produtos(categoria: str = "todos", limite: int = 10):
+    return {"categoria": categoria, "limite": limite}
+
+# Documentação automática em: http://localhost:8000/docs</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`# FastAPI não executa no Pyodide (precisa de servidor)\n# Este exemplo é para rodar localmente\n\n# Simularemos a lógica das rotas sem o servidor:\n\ndef raiz():\n    return {'mensagem': 'Bem-vindo à minha API!'}\n\ndef buscar_usuario(user_id: int):\n    return {'id': user_id, 'nome': f'Usuário {user_id}'}\n\ndef listar_produtos(categoria='todos', limite=10):\n    return {'categoria': categoria, 'limite': limite}\n\nprint(raiz())\nprint(buscar_usuario(42))\nprint(listar_produtos(categoria='eletronicos', limite=5))`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="example-block">
+                    <h4>📌 Intermediário — POST com Pydantic e validação</h4>
+                    <div class="code-container"><button class="copy-btn" onclick="copyText(this)">Copiar</button>
+                    <pre><code class="language-python">from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+from typing import Optional
+
+app = FastAPI()
+
+# Modelo de dados com validação automática
+class Produto(BaseModel):
+    nome: str = Field(..., min_length=2, max_length=100)
+    preco: float = Field(..., gt=0)
+    estoque: int = Field(default=0, ge=0)
+    descricao: Optional[str] = None
+
+# Banco fake em memória
+db: dict[int, Produto] = {}
+contador = 0
+
+@app.post("/produtos", status_code=201)
+def criar_produto(produto: Produto):
+    global contador
+    contador += 1
+    db[contador] = produto
+    return {"id": contador, **produto.model_dump()}
+
+@app.get("/produtos/{produto_id}")
+def buscar_produto(produto_id: int):
+    if produto_id not in db:
+        raise HTTPException(status_code=404, detail="Produto não encontrado")
+    return db[produto_id]
+
+@app.delete("/produtos/{produto_id}")
+def deletar_produto(produto_id: int):
+    if produto_id not in db:
+        raise HTTPException(status_code=404, detail="Produto não encontrado")
+    del db[produto_id]
+    return {"mensagem": "Produto removido"}
+
+# Testar em: http://localhost:8000/docs</code></pre></div>
+                    <button class="load-playground-btn" onclick="loadToPlayground(`# Simulação da lógica FastAPI + Pydantic no Pyodide\n\nclass Produto:\n    def __init__(self, nome, preco, estoque=0, descricao=None):\n        if len(nome) < 2:\n            raise ValueError('Nome muito curto')\n        if preco <= 0:\n            raise ValueError('Preço deve ser positivo')\n        if estoque < 0:\n            raise ValueError('Estoque não pode ser negativo')\n        self.nome = nome\n        self.preco = preco\n        self.estoque = estoque\n        self.descricao = descricao\n    def __repr__(self):\n        return f'Produto({self.nome!r}, R${self.preco:.2f}, estoque={self.estoque})'\n\ndb = {}\ncontador = 0\n\ndef criar_produto(nome, preco, estoque=0, descricao=None):\n    global contador\n    p = Produto(nome, preco, estoque, descricao)\n    contador += 1\n    db[contador] = p\n    return {'id': contador, 'produto': str(p)}\n\nprint(criar_produto('Notebook', 3500.00, estoque=5))\nprint(criar_produto('Mouse', 89.90, estoque=20))\nprint('Banco:', db)\n\ntry:\n    criar_produto('X', -10)\nexcept ValueError as e:\n    print('Erro de validação:', e)`)">▶ Abrir no Playground</button>
+                </div>
+
+                <div class="quiz-box" id="quiz-fastapi">
+                    <h3>🧠 Quiz rápido</h3>
+                    <div class="quiz-question">Qual é a principal vantagem de usar modelos Pydantic no FastAPI?</div>
+                    <div class="quiz-opts">
+                        <button class="quiz-opt" onclick="answerQuiz('fastapi', this, false)">Deixa o código mais curto</button>
+                        <button class="quiz-opt" onclick="answerQuiz('fastapi', this, false)">Substitui o banco de dados</button>
+                        <button class="quiz-opt" onclick="answerQuiz('fastapi', this, true)">Validação automática dos dados e geração de documentação</button>
+                    </div>
+                    <div class="quiz-feedback" id="qf-fastapi"></div>
+                </div>
+            </div>
+
             <!-- PLAYGROUND -->
             <div id="playground" class="code-section">
                 <h2>🚀 Playground Python</h2>
@@ -947,7 +1272,7 @@ print("Total:", calcular())</code></pre></div>
 
         // === PROGRESS ===
         const completedSections = new Set();
-        const totalSections = 12; // excluding playground
+        const totalSections = 16; // excluding playground
 
         function markDone(id) {
             if (id === 'playground') return;
@@ -962,7 +1287,7 @@ print("Total:", calcular())</code></pre></div>
         function updateProgress() {
             const pct = (completedSections.size / totalSections) * 100;
             document.getElementById('progressFill').style.width = pct + '%';
-            document.getElementById('progressText').textContent = `${completedSections.size} / 12 seções concluídas`;
+            document.getElementById('progressText').textContent = `${completedSections.size} / 16 seções concluídas`;
         }
 
         // === NAVIGATION ===
@@ -1140,6 +1465,10 @@ print("Total:", calcular())</code></pre></div>
             { id: 'regex',      icon: '🔍', name: 'Regex',         desc: 're.search, findall, sub' },
             { id: 'requests',   icon: '🌐', name: 'Requests',      desc: 'GET, POST, APIs, status codes' },
             { id: 'decorators', icon: '✨', name: 'Decorators',    desc: 'wrapper, @sintaxe, timer' },
+            { id: 'numpy',      icon: '🔢', name: 'NumPy',         desc: 'arrays, operações vetorizadas, reshape' },
+            { id: 'matplotlib', icon: '📈', name: 'Matplotlib',    desc: 'gráficos, subplots, barras, histograma' },
+            { id: 'sqlite',     icon: '🗄️', name: 'SQLite',        desc: 'banco de dados, SQL, Pandas integrado' },
+            { id: 'fastapi',    icon: '⚡', name: 'FastAPI',       desc: 'API REST, Pydantic, rotas, validação' },
             { id: 'playground', icon: '🚀', name: 'Playground',    desc: 'Execute Python no navegador' },
         ];
 
